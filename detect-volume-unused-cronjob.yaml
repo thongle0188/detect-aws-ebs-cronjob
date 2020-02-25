@@ -1,0 +1,21 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: detect-volume-unused
+  namespace: kube-system
+spec:
+  schedule: "0 0 * * *"
+  successfulJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: [YOUR ROLE]
+          labels:
+            app: detect-volume-unused
+        spec:
+          containers:
+            - name: detect-volume-unused
+              image: [YOUR IMAGE]
+          restartPolicy: Never
